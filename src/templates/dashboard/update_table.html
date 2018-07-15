@@ -1,0 +1,42 @@
+<table class="table  table-inverse">
+    <tbody id="votess">
+    </tbody>
+    <div>
+    </div>
+</table>
+<script type="text/javascript">
+setInterval(function() {
+    $.ajax({
+        method: "POST",
+        url: "https://api1.eosnairobi.io:8899/v1/chain/get_producers",
+        dataType: "json",
+        // contentType:"application/json",
+        data: JSON.stringify({ 'json': true, 'limit': 300 }),
+        success: function(data, textStatus, xhr) {
+            // console.log(data, xhr.status, 'success');
+            // console.log(data.rows[0].owner)
+            $("#votess").empty();
+            $.each(data.rows, function(index, element) {
+                new_index = parseInt(index, 10);
+                new_index += 1;
+                $('#votess').append(
+                    $('<tr>' +
+                        '<td>' + new_index + '</td>' +
+                        '<td><strong>' + element.owner +
+                        '</strong></td><td class="text-success"><strong>' + parseFloat(Math.round(element.total_votes * 100) / 100).toFixed(4) +
+                        '</strong></td></tr>'
+                    ));
+            });
+        },
+        error: function(data, textStatus, xhr) {
+            console.log(xhr.status, 'error encountered here');
+            $("#err").html("<div class='alert alert-danger fade show'><span class='close' data-dismiss='alert'>×</span>" +
+                "<strong>Error!</strong> Your Question Was NOT submitted Successfully</div>");
+        },
+        complete: function(xhr, textStatus) {
+            console.log(xhr.status, 'finished');
+
+        }
+    })
+}, 2000);
+</script>

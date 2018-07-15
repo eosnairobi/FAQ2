@@ -1,0 +1,64 @@
+{% load staticfiles notifications_tags %}
+<div id="header" class="header navbar-inverse">
+    <!-- begin navbar-header -->
+    <div class="navbar-header">
+        <a href="/" class="navbar-brand"> <b>EOSiO</b> Hub<small><span class="label label-theme m-l-5">BETA</span></small></a>
+        <button type="button" class="navbar-toggle" data-click="top-menu-toggled">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        
+
+    </div>
+    <ul class="navbar-nav">
+        <li>
+            <a href="http://eosnairobi.io" target="_blank">Presented by EOSNairobi</a>
+        </li>
+        <li>    
+            <a href="http://eosiohub.io" target="_blank" class="text-success btn-sm">Also at eosiohub.io</a>
+        </li>
+    </ul>
+    <!-- end navbar-header -->
+    <!-- begin header navigation right -->
+    <ul class="navbar-nav navbar-right">
+        
+        <li>
+            <form class="navbar-form full-width">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Enter keyword" />
+                    <button type="submit" class="btn btn-search"><i class="fa fa-search"></i></button>
+                </div>
+            </form>
+        </li>
+        {% if request.user.is_authenticated %}
+        <li class="dropdown">
+            <a href="javascript:;" data-toggle="dropdown" class="dropdown-toggle f-s-14">
+                        <i class="fa fa-bell"></i>
+                        <span class="label">5</span>
+                    </a>
+            <ul class="dropdown-menu media-list pull-right">
+                <li class="dropdown-header">NOTIFICATIONS (5)</li>
+               
+            </ul>
+        </li>
+        <li class="dropdown navbar-user">
+            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                        <img src="{% static 'dashboard/assets/img/user/user-13.jpg' %}" alt="" /> 
+                        <span class="hidden-xs">{{ request.user }}</span> <b class="caret"></b>
+                    </a>
+            <ul class="dropdown-menu">
+                <li class="arrow"></li>
+                <li><a href="javascript:;">Edit Profile</a></li>
+                <li><a href="javascript:;"><span class="badge badge-danger pull-right">2</span> Inbox</a></li>
+                
+                <li class="divider"></li>
+                <li><a href="/logout">Log Out</a></li>
+            </ul>
+        </li>
+        {% else %}
+    
+        {% endif %}
+    </ul>
+    <!-- end header navigation right -->
+</div>
