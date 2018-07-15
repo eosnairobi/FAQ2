@@ -11,6 +11,11 @@ from django.utils import timezone
 # Holds the User account(s)
 
 
+def bp_logo_directory_path(instance, filename):
+    # image will be uploaded to MEDIA_ROOT/dapps/<filename>
+    return 'BP/{0}/{1}'.format(instance.account_name, filename)
+
+
 # Custom User Model
 class User(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
@@ -33,23 +38,18 @@ class BlockProducer(models.Model):
     producer_key = models.CharField(max_length=60)
     display_name = models.CharField(max_length=300, blank=True)
     url = models.URLField(blank=True, null=True)
+    logo = models.ImageField(null=True, blank=True, upload_to=bp_logo_directory_path)
     email = models.EmailField(blank=True, null=True)
-    latitude = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
-    longitude = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
+    latitude = models.DecimalField(
+        max_digits=5, decimal_places=2, blank=True, null=True)
+    longitude = models.DecimalField(
+        max_digits=5, decimal_places=2, blank=True, null=True)
     lat = models.FloatField(blank=True, null=True)
     lon = models.FloatField(blank=True, null=True)
     geom = models.PointField(srid=4326, blank=True, null=True)
     public_endpoint = models.URLField(blank=True, null=True)
-    # location = models.MultiPointField(srid=4326, blank=True, null=True)
     country = models.CharField(max_length=30, blank=True)
     objects = GeoManager()
-    # geom = models.MultiPolygonField(srid=4326)
-
-    # def get_location(self):
-    #     return self.latitude, self.longitude
-
-    # def get_gis_coords(self):
-    #     return self.lat, self.long
 
     def __str__(self):
         return self.account_name
@@ -70,14 +70,18 @@ class BlockProducerData(models.Model):
 
 class Node(models.Model):
     block_producer = models.ForeignKey(
-        BlockProducer, on_delete=models.CASCADE, related_name='nodes')
+        'BlockProducer', on_delete=models.CASCADE, related_name='nodes')
     node_type = models.CharField(max_length=20, null=True)
     longitude = models.FloatField(null=True)
     latitude = models.FloatField(null=True)
     p2p_endpoint = models.URLField(null=True)
     ssl_endpoint = models.URLField(null=True)
+    
+    def __str__(self):
+        return self.block_producer
 
 
+# On GeoDjango. No longer used.
 class Country(models.Model):
     fips = models.CharField(max_length=2)
     iso2 = models.CharField(max_length=2)
