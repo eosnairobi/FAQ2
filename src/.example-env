@@ -1,0 +1,9 @@
+SECRET_KEY=SECRET_KEY_HERE
+DEBUG=False
+ALLOWED_HOSTS=*
+DB_NAME=
+DB_HOST=lhost
+DB_USER=user
+DB_PASSWORD= 
+# DB_ENGINE=django.db.backends.postgresql
+DB_ENGINE=django.contrib.gis.db.backends.postgis
