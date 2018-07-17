@@ -42,8 +42,10 @@ INSTALLED_APPS = [
     'django.contrib.gis',
     'djgeojson',
     'easy_thumbnails',
+    'django_filters',
     'notifications',
     'rest_framework',
+    'tools',
     'accounts',
     'leaflet',
     'faq',
@@ -149,3 +151,7 @@ LEAFLET_CONFIG = {
 SERIALIZATION_MODULES = {
      "geojson": "django.contrib.gis.serializers.geojson",
   }
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
+}

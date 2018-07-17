@@ -15,16 +15,11 @@ def home(request):
 
 def countries(request):
     countries = serialize('geojson', Country.objects.all())
-    return HttpResponse(countries, content_type='json') 
-
-# def bps(request):
-#     bps = serialize('geojson', BlockProducer.objects.all())
-#     return HttpResponse(bps, content_type='json')
-
+    return HttpResponse(countries, content_type='json')
 
 
 def bps(request):
-    points_as_geojson = serialize( 'geojson',BlockProducer.objects.all()[:30])
+    points_as_geojson = serialize('geojson', BlockProducer.objects.all()[:30])
     return JsonResponse(json.loads(points_as_geojson))
 
 

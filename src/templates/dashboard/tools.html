@@ -1,0 +1,255 @@
+{% load staticfiles notifications_tags easy_thumbnails_tags crispy_forms_tags %}
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8" />
+    <title>EOSiO Hub | Community Tools</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!-- ================== BEGIN BASE CSS STYLE ================== -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    <link href="{% static 'dashboard/assets/plugins/jquery-ui/jquery-ui.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'dashboard/assets/plugins/bootstrap/4.1.0/css/bootstrap.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'dashboard/assets/plugins/font-awesome/5.0/css/fontawesome-all.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'dashboard/assets/plugins/animate/animate.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'dashboard/assets/css/default/style.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'dashboard/assets/css/default/style-responsive.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'dashboard/assets/css/default/theme/default.css' %}" rel="stylesheet" id="theme" />
+    <!-- ================== END BASE CSS STYLE ================== -->
+    <!-- ================== BEGIN BASE JS ================== -->
+    <script src="{% static 'dashboard/assets/plugins/pace/pace.min.js' %}"></script>
+    <!-- ================== END BASE JS ================== -->
+    <style type="text/css">
+        #circle {
+            height: 0.7rem;
+            width: 0.7rem;
+            border-radius: 4rem;
+            opacity: 0.5;
+            -webkit-animation: pulsate 3000ms ease-out;
+            -webkit-animation-iteration-count: infinite;
+            -webkit-transition: background-color 300ms linear;
+            -moz-transition: background-color 300ms linear;
+            -o-transition: background-color 300ms linear;
+            -ms-transition: background-color 300ms linear;
+            transition: background-color 300ms linear;
+        }
+
+        @-webkit-keyframes pulsate {
+            0% {
+                opacity: 0.1;
+            }
+            40% {
+                opacity: 1.0;
+            }
+            60% {
+                opacity: 1.0;
+            }
+            100% {
+                opacity: 0.1;
+            }
+        }
+
+        .offline {
+            background: red;
+        }
+
+        .online {
+            background: green;
+        }
+
+        .some-other-status {
+            background: yellow;
+        }
+
+        /* useless */
+
+        .set {
+            background: #ededed;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            cursor: pointer;
+            -webkit-transition: background-color 300ms linear;
+            -moz-transition: background-color 300ms linear;
+            -o-transition: background-color 300ms linear;
+            -ms-transition: background-color 300ms linear;
+            transition: background-color 300ms linear;
+        }
+
+        .set:hover {
+            background: #dedede;
+        }
+
+        .floater {
+            float: left;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="page-loader" class="fade show">
+        <span class="spinner"></span>
+    </div>
+    <!-- end #page-loader -->
+    <!-- begin #page-container -->
+    <div id="page-container" class="page-container fade page-header-fixed page-sidebar-fixed page-with-top-menu">
+
+        <!-- begin #header -->
+        {% include 'dashboard/navbar.html' %}
+        <!-- end #header -->
+        <!-- begin #top-menu -->
+        <div id="top-menu" class="top-menu">
+            <!-- begin top-menu nav -->
+            {% include 'dashboard/top-menu.html' %}
+            <!-- end top-menu nav -->
+        </div>
+        <!-- end #top-menu -->
+        {% include 'dashboard/sidebar.html' %}
+        <!-- begin #content -->
+        <div id="content" class="content">
+            <!-- begin breadcrumb -->
+            <ol class="breadcrumb pull-right">
+                <li class="breadcrumb-item">
+                    <a href="javascript:;">Home</a>
+                </li>
+                <li class="breadcrumb-item active">Tools</li>
+            </ol>
+            <!-- end breadcrumb -->
+            <!-- begin page-header -->
+            <h1 class="page-header m-b-10">Community Tools
+                <small>All Categories</small>
+            </h1>
+            <!-- end page-header -->
+            <p class="m-b-20">
+                This is a collection of tools developed for the community by members of the community. We may have missed some, and we ask
+                you to submit
+                <a href="#suggest" data-toggle="modal" class="btn btn-outline-primary  btn-xs">here.</a> We promise to review as fast as possible and add to the list.
+            </p>
+            <div id="options" class="m-b-10">
+                <span class="gallery-option-set" id="filter" data-option-key="filter">
+
+                    <button class="btn btn-outline-success  btn-xs active" id="all">Show All</a>
+                        {% for category in categories %}
+                        <button class="btn btn-outline-success btn-xs" id="{{ category.id }}">{{ category.name }}</button>
+                        {% endfor %} {% comment %}
+                        <input type="text" class="form-control" id="filter" placeholder="Filter By Name"> {% endcomment %}
+
+                </span>
+            </div>
+            <!-- begin row -->
+            <br>
+            <div class="row" id="parent">
+                {% for tool in tools %}
+                <div class="col-sm-6 col-lg-3 floater  {{ tool.category.id }}">
+                    <div class="card card-inverse">
+                        <img class="card-img" src="{% thumbnail tool.image|default:'eosio.png' 300x300 crop %}" alt="" />
+                        <div class="card-img-overlay">
+                            <h5>
+                                <i class="pull-right {% if tool.status == " LIVE " %}online {% else %} offline {% endif %}" id="circle"></i>
+                            </h5>
+                            <h4 class="card-title">{{ tool.name }}</h4>
+                            <br>
+                            <br>
+                            <br>
+                            <p class="card-text text-warning pull-right">
+                                <small>
+                                    <strong>By {{ tool.created_by }} </strong>
+                                </small>
+                            </p>
+                            <a href="{{ tool.link }}" target="_blank" class="btn btn-outline-success btn-xs">Visit Site</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="suggest"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <form id='question_form' method="POST" action="{% url 'tools' %}" enctype="multipart/form-data"> {% csrf_token %}
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-center">What did we miss?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div id="err"></div>
+
+                            {{ form | crispy }}
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+                            <input type="submit" class="btn btn-success" />
+                        </div>
+                </form>
+                </div>
+            </div>
+        </div>
+        <!-- end #content -->
+        <!-- begin theme-panel -->
+        <!-- begin scroll to top btn -->
+        <a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top">
+            <i class="fa fa-angle-up"></i>
+        </a>
+        <!-- end scroll to top btn -->
+    </div>
+    <!-- end page container -->
+    <!-- ================== BEGIN BASE JS ================== -->
+    <script src="{% static 'dashboard/assets/plugins/jquery/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'dashboard/assets/plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'dashboard/assets/plugins/bootstrap/4.1.0/js/bootstrap.bundle.min.js' %}"></script>
+    <!--[if lt IE 9]>
+        <script src="../assets/crossbrowserjs/html5shiv.js"></script>
+        <script src="../assets/crossbrowserjs/respond.min.js"></script>
+        <script src="../assets/crossbrowserjs/excanvas.min.js"></script>
+    <![endif]-->
+    <script src="{% static 'dashboard/assets/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+    <script src="{% static 'dashboard/assets/plugins/js-cookie/js.cookie.js' %}"></script>
+    <script src="{% static 'dashboard/assets/js/theme/default.min.js' %}"></script>
+    <script src="{% static 'dashboard/assets/js/apps.min.js' %}"></script>
+    <!-- ================== END BASE JS ================== -->
+    <script>
+        $(document).ready(function () {
+            App.init();
+        });
+    </script>
+    <script>
+        var $btns = $('.btn').click(function () {
+            if (this.id == 'all') {
+                $('#parent > div').fadeIn(450);
+            } else {
+                var $el = $('.' + this.id).fadeIn(450);
+                console.log($el);
+                $('#parent > div').not($el).hide();
+            }
+            $btns.removeClass('active');
+            $(this).addClass('active');
+        });
+    </script>
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-53034621-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+</body>
+
+</html>

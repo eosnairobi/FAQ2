@@ -1,8 +1,16 @@
+import copy  # Copies instances of Image
+import cStringIO  # Used to imitate reading from byte file
+import imghdr  # Used to validate images
 import json
+import urllib2  # Used to download images
+import urlparse  # Cleans up image urls
 
 import requests
+from PIL import Image  # Holds downloaded image and verifies it
 
 from django.contrib.gis import geos
+from django.core.files import File
+from django.core.files.temp import NamedTemporaryFile
 from django.utils import timezone
 
 from .models import BlockProducer, BlockProducerData, User
@@ -189,7 +197,7 @@ def calculate_weighted(bp, unweighted_votes):
 
 
 def fetch_bp_json():
-    
+
     bps = BlockProducer.objects.all()
     filename = 'bp.json'
     for bp in bps:
@@ -202,6 +210,9 @@ def fetch_bp_json():
             if details:
                 bp.display_name = details.get('candidate_name')
                 bp.email = details.get('email')
+                logos = details.get('branding')
+                if logos:
+                    logo = save_image_from_url(bp, logos.get('logo_256'))  # See function definition below
                 location = details.get('location')
                 if location:
                     bp.country = location.get('country')
@@ -214,3 +225,70 @@ def fetch_bp_json():
                 print(bp.geom)
         except Exception as e:
             print(str(e))
+
+
+
+
+def save_image_from_url(model, url):
+    r = requests.get(url)
+
+    img_temp = NamedTemporaryFile(delete=True)
+    img_temp.write(r.content)
+    # img_temp.flush()
+
+    model.logo.save("image.jpg", File(img_temp), save=True)
+
+
+# def download_image(url):
+#     """Downloads an image and makes sure it's verified.
+
+#     Returns a PIL Image if the image is valid, otherwise raises an exception.
+#     """
+#     headers = {
+#         'User-Agent': 'Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0'}  # More likely to get a response if server thinks you're a browser
+#     r = urllib2.Request(url, headers=headers)
+#     request = urllib2.urlopen(r, timeout=10)
+#     # StringIO imitates a file, needed for verification step
+#     image_data = cStringIO.StringIO(request.read())
+#     # Creates an instance of PIL Image class - PIL does the verification of file
+#     img = Image.open(image_data)
+#     # Verify the copied image, not original - verification requires you to open the image again after verification, but since we don't have the file saved yet we won't be able to. This is because once we read() urllib2.urlopen we can't access the response again without remaking the request (i.e. downloading the image again). Rather than do that, we duplicate the PIL Image in memory.
+#     img_copy = copy.copy(img)
+#     if valid_img(img_copy):
+#         return img
+#     else:
+#         # Maybe this is not the best error handling...you might want to just provide a path to a generic image instead
+#         raise Exception(
+#             'An invalid image was detected when attempting to save a BP!')
+
+
+# def valid_img(img):
+#     """Verifies that an instance of a PIL Image Class is actually an image and returns either True or False."""
+#     type = img.format
+#     if type in ('GIF', 'JPEG', 'JPG', 'PNG'):
+#         try:
+#             img.verify()
+#             return True
+#         except:
+#             return False
+#     else:
+#         return False
+
+
+# # def save(self, url='', *args, **kwargs):
+# #     if self.prod_img != '' and url != '':  # Don't do anything if we don't get passed anything!
+# #         image = download_image(url)  # See function definition below
+# #         try:
+# #             filename = urlparse.urlparse(url).path.split('/')[-1]
+# #             self.prod_img = filename
+# #             tempfile = image
+# #             # Will make a file-like object in memory that you can then save
+# #             tempfile_io = cStringIO.StringIO()
+# #             tempfile.save(tempfile_io, format=image.format)
+# #             # Set save=False otherwise you will have a looping save method
+# #             self.prod_img.save(filename, ContentFile(
+# #                 tempfile_io.getvalue()), save=False)
+# #         except Exception as e:
+# #             print("Error trying to save model: saving image failed: " + str(e))
+# #             pass
+# #     super(Product, self).save(*args, **kwargs)  # We've gotten the image into the ImageField above...now we actually need to save it. We've redefined the save method for Product, so super *should* get the parent of class Product, models.Model and then run IT'S save method, which will save the Product like normal

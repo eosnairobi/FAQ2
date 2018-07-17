@@ -1,11 +1,16 @@
 from django.urls import path
 from djgeojson.views import GeoJSONLayerView, TiledGeoJSONLayerView
+from rest_framework.routers import DefaultRouter
 
+from .api.views import bp_data, missing_info, BPDataModelViewSet
 from .models import BlockProducer
 from .views import bps, countries, home, render_missing
-from .api.views import bp_data, missing_info
 
-urlpatterns = (
+router = DefaultRouter()
+
+router.register('data-filter', BPDataModelViewSet, base_name='data-filter')
+
+urlpatterns = [
     path('', home, name='home'),
     path('countries/', countries, name='countries'),
     # path('data.geojson', GeoJSONLayerView.as_view(model=BlockProducer), name='data1'),
@@ -16,4 +21,6 @@ urlpatterns = (
     path('missing/', render_missing, name='render_missing')
 
 
-)
+]
+
+urlpatterns += router.urls
