@@ -21,8 +21,6 @@ from .models import BlockProducer, BlockProducerData, User
 from celery import shared_task
 
 
-
-
 @shared_task
 def get_users():
     count = 1
@@ -43,9 +41,8 @@ def get_users():
                                              gold_badges=item['badge_counts']['gold'], password='zxcvbnm,.')
                 print('Created')
                 count += 1
-                print(count)
             else:
-                print(count)
+                pass
 
 
 """
@@ -109,6 +106,7 @@ def get_users():
     }
 """
 
+
 @shared_task
 def get_blockproducers():
     """
@@ -128,8 +126,6 @@ def get_blockproducers():
         r = requests.post(url, data=json.dumps({'json': 'true', 'limit': 300}))
     except Exception as e:
         r = None
-        print(str(e))
-
     if r:
         response = json.loads(r.text)
         data = response.get('rows')
@@ -144,6 +140,7 @@ def get_blockproducers():
                                          url=url, producer_key=producer_key))
 
         BlockProducer.objects.bulk_create(bps)
+
 
 @shared_task
 def update_bp_position():
@@ -188,6 +185,7 @@ def update_bp_position():
                 except Exception as e:
                     pass
 
+
 @shared_task
 def calculate_weighted(bp, unweighted_votes):
     """
@@ -202,6 +200,7 @@ def calculate_weighted(bp, unweighted_votes):
     now = timezone.now().timestamp()  # If youre using python 2 look for another way
     print(now)
     # More TODO
+
 
 @shared_task
 def fetch_bp_json():
@@ -233,9 +232,9 @@ def fetch_bp_json():
                     bp.geom = geos.fromstr(point)
                 bp.save()
                 print(bp.geom)
-        except Exception as e:
-            print('Error FOund here')
-            print(str(e))
+        except Exception:
+           pass
+
 
 @shared_task
 def is_downloadable(bp, url):
@@ -251,10 +250,10 @@ def is_downloadable(bp, url):
         downloadable = False
     downloadable = True
     if downloadable:
-        print('Downloadable {}'.format(bp.account_name))
         download_to_file_field(url, bp)
         # r = requests.get(url, allow_redirects=True)
         # get_filename_from_cd(bp, r.headers.get('content-disposition'), url, r)
+
 
 @shared_task
 def download_to_file_field(url, bp):
@@ -262,10 +261,8 @@ def download_to_file_field(url, bp):
         r = requests.get(url, stream=True, verify=False)
         for chunk in r.iter_content(chunk_size=4096):
             tf.write(chunk)
-
         tf.seek(0)
         bp.logo.save(basename(urlsplit(url).path), File(tf))
-        print('Downloaded for {}'.format(bp.account_name))
 
 # @shared_task
 # def get_filename_from_cd(bp, cd, url, r):
@@ -294,3 +291,8 @@ def download_to_file_field(url, bp):
 
 # def save_image_to_model(bp, filename):
 #     pass
+
+
+# content_length = header.get('content-length', None)
+# if content_length and content_length > 2e8:  # 200 mb approx
+#   return False
