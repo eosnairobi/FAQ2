@@ -128,44 +128,23 @@
             <p class="m-b-20">
                 This is a collection of tools developed for the community by members of the community. We may have missed some, and we ask
                 you to submit
-                <a href="#suggest" data-toggle="modal" class="btn btn-outline-primary  btn-xs">here.</a> We promise to review as fast as possible and add to the list.
+                <a href="#suggest" data-toggle="modal" class="btn btn-outline-primary btn-xs">here.</a> We promise to review as fast as possible and add to the list.
             </p>
             <div id="options" class="m-b-10">
                 <span class="gallery-option-set" id="filter" data-option-key="filter">
-
-                    <button class="btn btn-outline-success  btn-xs active" id="all">Show All</a>
+                    
+                    {% if categories %}<button class="btn btn-outline-success btn-xs active" id="all">Show All</a>{% endif %}
                         {% for category in categories %}
-                        <button class="btn btn-outline-success btn-xs" id="{{ category.id }}">{{ category.name }}</button>
-                        {% endfor %} {% comment %}
-                        <input type="text" class="form-control" id="filter" placeholder="Filter By Name"> {% endcomment %}
+                        <button class="btn btn-outline-success btn-xs filt" id="{{ category.id }}">{{ category.name }}</button>
+                        {% endfor %} 
+                        <input type="text" class="form-control" id="filter" placeholder="Filter By Name"> 
 
                 </span>
             </div>
             <!-- begin row -->
             <br>
             <div class="row" id="parent">
-                {% for tool in tools %}
-                <div class="col-sm-6 col-lg-3 floater  {{ tool.category.id }}">
-                    <div class="card card-inverse">
-                        <img class="card-img" src="{% thumbnail tool.image|default:'eosio.png' 300x300 crop %}" alt="" />
-                        <div class="card-img-overlay">
-                            <h5>
-                                <i class="pull-right {% if tool.status == " LIVE " %}online {% else %} offline {% endif %}" id="circle"></i>
-                            </h5>
-                            <h4 class="card-title">{{ tool.name }}</h4>
-                            <br>
-                            <br>
-                            <br>
-                            <p class="card-text text-warning pull-right">
-                                <small>
-                                    <strong>By {{ tool.created_by }} </strong>
-                                </small>
-                            </p>
-                            <a href="{{ tool.link }}" target="_blank" class="btn btn-outline-success btn-xs">Visit Site</a>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
+               
             </div>
         </div>
         <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="suggest"
@@ -216,6 +195,16 @@
     <script src="{% static 'dashboard/assets/js/theme/default.min.js' %}"></script>
     <script src="{% static 'dashboard/assets/js/apps.min.js' %}"></script>
     <!-- ================== END BASE JS ================== -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            setInterval(function () {
+                $('#parent').load("{% url 'all_tools' %}")
+            }, 2000)
+            $(".filt").click(function(){
+                $("#parent").load("");
+            });
+        });
+    </script>
     <script>
         $(document).ready(function () {
             App.init();

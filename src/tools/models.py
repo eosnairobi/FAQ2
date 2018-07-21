@@ -23,7 +23,7 @@ class Tool(models.Model):
     creator_name = models.CharField(max_length=100)
     associated_bps = models.ManyToManyField(
         BlockProducer)
-    categories = models.ManyToManyField('Category')
+    categories = models.ManyToManyField('Category', related_name='categories')
     description = models.CharField(max_length=1000)
     image = models.ImageField(blank=True, null=True,
                               upload_to=tool_logo_directory_path)

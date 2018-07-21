@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 import os
 
 from decouple import config
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.gis',
+    'crispy_forms',
     'djgeojson',
     'easy_thumbnails',
     'django_filters',
@@ -47,6 +49,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'tools',
     'accounts',
+    'community',
     'leaflet',
     'faq',
 ]
@@ -146,12 +149,18 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LEAFLET_CONFIG = {
     'DEFAULT_CENTER': (-.023, 36),
-    'DEFAULT_ZOOM':2
+    'DEFAULT_ZOOM': 2
 }
 SERIALIZATION_MODULES = {
-     "geojson": "django.contrib.gis.serializers.geojson",
-  }
+    "geojson": "django.contrib.gis.serializers.geojson",
+}
 
 REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.JSONParser',
+    )
 }

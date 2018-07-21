@@ -54,7 +54,7 @@ def missing_info(request):
     return Response(missing)
 
 
-class BPDataModelViewSet(viewsets.ModelViewSet):
+class BPDataModelViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = BlockProducer.objects.all().order_by('id')
     serializer_class = BlockProducerModelSerializer
     filter_backends = (DjangoFilterBackend,)
