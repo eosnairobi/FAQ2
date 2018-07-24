@@ -132,19 +132,19 @@
             </p>
             <div id="options" class="m-b-10">
                 <span class="gallery-option-set" id="filter" data-option-key="filter">
-                    
-                    {% if categories %}<button class="btn btn-outline-success btn-xs active" id="all">Show All</a>{% endif %}
-                        {% for category in categories %}
+
+                    {% if categories %}
+                    <button class="btn btn-outline-success btn-xs active all" id="all">Show All</a>{% endif %} {% for category in categories %}
                         <button class="btn btn-outline-success btn-xs filt" id="{{ category.id }}">{{ category.name }}</button>
-                        {% endfor %} 
-                        <input type="text" class="form-control" id="filter" placeholder="Filter By Name"> 
+                        {% endfor %}
+                        <input type="text" class="form-control" id="filter" placeholder="Filter By Name">
 
                 </span>
             </div>
             <!-- begin row -->
             <br>
             <div class="row" id="parent">
-               
+                {% include 'dashboard/partials/_tools_.html' %}
             </div>
         </div>
         <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="suggest"
@@ -197,12 +197,62 @@
     <!-- ================== END BASE JS ================== -->
     <script type="text/javascript">
         $(document).ready(function () {
-            setInterval(function () {
-                $('#parent').load("{% url 'all_tools' %}")
-            }, 2000)
-            $(".filt").click(function(){
-                $("#parent").load("");
+
+            $(".filt").click(function () {
+                var el = $(this.id)
+                // alert(this.id);
+                $('#all').removeClass('active')
+                // all.removeClass('active')
+                $('button').removeClass('active')
+                $(this).addClass('active')
+                console.log(el)
+                $("#parent").load("/tool/" + this.id);
             });
+            $(".all").click(function () {
+                var el = $(this.id)
+                // alert(this.id);
+                console.log(el)
+                $('button').removeClass('active')
+                $(this).addClass('active')
+                $("#parent").load("{% url 'all_tools' %}");
+            });
+        });
+    </script>
+    <script>
+        $("#filter").keyup(function () {
+
+            // Retrieve the input field text and reset the count to zero
+            var filter = $(this).val(),
+                count = 0;
+
+
+            // Loop through the comment list
+            $(".item").each(function () {
+
+                // If the list item does not contain the text phrase fade it out
+                if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+                    $(this).hide();
+                    console.log('In if Statement Count =' + count + ' Variable =' + $(this).text().search(
+                        new RegExp(filter, "i")));
+                    if (count < 1) {
+                        $(".not-found").show();
+                    }
+
+
+                    // Show the list item if the phrase matches and increase the count by 1
+                } else {
+                    $(this).fadeIn();
+                    $(".not-found").hide();
+                    console.log($(this).text().search(new RegExp(filter, "i")));
+                    count++;
+                    console.log('In Else Statement Count=' + count + 'Variable =' + $(this).text().search(
+                        new RegExp(filter, "i")))
+
+                }
+
+            });
+
+
         });
     </script>
     <script>
@@ -210,35 +260,8 @@
             App.init();
         });
     </script>
-    <script>
-        var $btns = $('.btn').click(function () {
-            if (this.id == 'all') {
-                $('#parent > div').fadeIn(450);
-            } else {
-                var $el = $('.' + this.id).fadeIn(450);
-                console.log($el);
-                $('#parent > div').not($el).hide();
-            }
-            $btns.removeClass('active');
-            $(this).addClass('active');
-        });
-    </script>
-    <script>
-        (function (i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-        ga('create', 'UA-53034621-1', 'auto');
-        ga('send', 'pageview');
-    </script>
+
 </body>
 
 </html>

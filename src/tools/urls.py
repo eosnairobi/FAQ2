@@ -14,6 +14,6 @@ router.register(r'api-categories', CategoryModelViewSet,
 urlpatterns = [
     path('tools/', tools, name='tools'),
     path('render-tools/', render_tools, name='all_tools'),
-    re_path(r'^tool/(?P<account>[\w-]+)/$', filter, name='filter'),
+    re_path(r'^tool/(?P<category_id>[\w-]+)/$', filter, name='filter'),
 ]
 urlpatterns += router.urls
