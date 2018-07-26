@@ -29,7 +29,7 @@ class Tool(models.Model):
     name = models.CharField(max_length=100)
     creator_name = models.CharField(max_length=100)
     associated_bps = models.ManyToManyField(
-        BlockProducer)
+        BlockProducer, blank=True)
     categories = models.ManyToManyField('Category', related_name='categories')
     description = models.CharField(max_length=1000)
     image = models.ImageField(blank=True, null=True,
@@ -37,5 +37,5 @@ class Tool(models.Model):
     url = models.URLField(blank=True, null=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, null=True)
 
-    def __str(self):
+    def __str__(self):
         return self.name

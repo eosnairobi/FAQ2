@@ -2,7 +2,7 @@
 {% for tool in tools %}
 <div class="col-sm-6 col-lg-3 floater item {{ tool.category.id }}">
     <div class="card card-inverse">
-        <img class="card-img" src="{% thumbnail tool.image|default:'eosio.png' 300x300 %}" alt="" />
+        <img class="card-img" src="{% thumbnail tool.image|default:'eosio.png' 100x50 crop%}" alt="" />
         <div class="card-img-overlay">
             <h5>
                 <i class="pull-right {% if tool.status == "LIVE" %}online {% else %} offline {% endif %}" id="circle"></i>
