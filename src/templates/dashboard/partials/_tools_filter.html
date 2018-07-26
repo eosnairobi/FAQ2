@@ -1,26 +1,26 @@
 {% load staticfiles notifications_tags easy_thumbnails_tags crispy_forms_tags %} 
 {% for tool in tools %}
-<div class="col-sm-6 col-lg-3 floater item {{ tool.category.id }}">
+<div class="col-sm-6 col-lg-3 item {{ tool.category.id }}">
     <div class="card card-inverse">
-        <img class="card-img" src="{% thumbnail tool.image|default:'eosio.png' 100x50 crop%}" alt="" />
+        <img class="card-img" src="{% thumbnail tool.image|default:'eosio.png' 100x50 crop %}" alt="" />
         <div class="card-img-overlay">
             <h5>
                 <i class="pull-right {% if tool.status == "LIVE" %}online {% else %} offline {% endif %}" id="circle"></i>
             </h5>
-            <h4 class="card-title">{{ tool.name }}</h4>
-           <p class="card-text">
-           {{ tool.description }}
+            <h4 class="card-title"><a href="{{ tool.url }}">{{ tool.name }}</a></h4>
+           <small><p class="card-text">
+           {{ tool.description | truncatechars:50}}
            </p>
-           <br>
-           <br>
-           <br>
-            <p class="card-text text-warning pull-right">
+        </small>
+          
+            <p class="card-text text-warning">
                 <small>
-                    <strong>By {{ tool.creator_name }} </strong>
+                   
+                <small><strong>By {{ tool.creator_name }} </strong></small>
 
                 </small>
             </p>
-            <a href="{{ tool.link }}" target="_blank" class="btn btn-outline-success btn-xs">Visit Site</a>
+           
         </div>
     </div>
 </div>
