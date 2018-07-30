@@ -1,5 +1,4 @@
-{% load staticfiles notifications_tags easy_thumbnails_tags crispy_forms_tags %} 
-{% for tool in tools %}
+{% load staticfiles notifications_tags easy_thumbnails_tags crispy_forms_tags %} {% for tool in tools %}
 <div class="col-sm-6 col-lg-3 item {{ tool.category.id }}">
     <div class="card card-inverse ">
         <img class="card-img" src="{% thumbnail tool.image|default:'eosio.png' 100x50 crop %}" alt="" />
@@ -7,20 +6,25 @@
             <h5>
                 <i class="pull-right {% if tool.status == "LIVE" %}online {% else %} offline {% endif %}" id="circle"></i>
             </h5>
-            <h4 class="card-title"><a class="title" href="{{ tool.url }}">{{ tool.name }}</a></h4>
-           <small><p class="card-text title">
-           {{ tool.description | truncatechars:50}}
-           </p>
-        </small>
-          
+            <h4 class="card-title">
+                <a class="title text-green" href="{{ tool.url }}">{{ tool.name }}</a>
+            </h4>
+            <small>
+                <p class="card-text title">
+                    {{ tool.description | truncatechars:50}}
+                </p>
+            </small>
+
             <p class="card-text text-warning">
                 <small>
-                   
-                <small><strong>By {{ tool.creator_name }} </strong></small>
+
+                    <small>
+                        <strong>By {{ tool.creator_name }} </strong>
+                    </small>
 
                 </small>
             </p>
-           
+
         </div>
     </div>
 </div>
