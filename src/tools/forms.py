@@ -6,4 +6,4 @@ class SuggestionForm(forms.ModelForm):
     class Meta:
         model = SuggestedTool
         fields ='__all__'
-      
+        exclude = ('id',)
