@@ -9,8 +9,6 @@ from .models import BlockProducer, Country
 # # Create your views here.
 
 
-def home(request):
-    return render(request, 'map.html')
 
 
 def countries(request):

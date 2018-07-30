@@ -1,0 +1,172 @@
+{% load staticfiles notifications_tags %}
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8" />
+    <title>EOSiO Hub | Community Tools</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!-- ================== BEGIN BASE CSS STYLE ================== -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    <link href="{% static 'dashboard/assets/plugins/jquery-ui/jquery-ui.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'dashboard/assets/plugins/bootstrap/4.1.0/css/bootstrap.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'dashboard/assets/plugins/font-awesome/5.0/css/fontawesome-all.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'dashboard/assets/plugins/animate/animate.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'dashboard/assets/css/default/style.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'dashboard/assets/css/default/style-responsive.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'dashboard/assets/css/default/theme/default.css' %}" rel="stylesheet" id="theme" />
+    <!-- ================== END BASE CSS STYLE ================== -->
+    <!-- ================== BEGIN BASE JS ================== -->
+    <script src="{% static 'dashboard/assets/plugins/pace/pace.min.js' %}"></script>
+    <!-- ================== END BASE JS ================== -->
+    <style type="text/css">
+    .rep p {
+        font-size: 6;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="page-loader" class="fade show"><span class="spinner"></span></div>
+    <!-- end #page-loader -->
+    <!-- begin #page-container -->
+    <div id="page-container" class="page-container fade page-header-fixed page-sidebar-fixed page-with-top-menu">
+        <!-- begin #header -->
+        {% include 'dashboard/navbar.html' %}
+        <!-- end #header -->
+        <!-- begin #top-menu -->
+        <div id="top-menu" class="top-menu">
+            <!-- begin top-menu nav -->
+            {% include 'dashboard/top-menu.html' %}
+            <!-- end top-menu nav -->
+        </div>
+        <!-- end #top-menu -->
+        {% include 'dashboard/sidebar.html' %}
+        <!-- begin #content -->
+        <div id="content" class="content">
+            <!-- begin breadcrumb -->
+            <ol class="breadcrumb pull-right">
+                <li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
+                <li class="breadcrumb-item active">Tools</li>
+            </ol>
+            <!-- end breadcrumb -->
+            <!-- begin page-header -->
+            <h1 class="page-header m-b-10">Community Tools <small>All Categories</small></h1>
+            <!-- end page-header -->
+            <p class="m-b-20">
+                This is a collection of tools developed for the community by members of the community. We may have missed some, and we ask you to submit it
+                <a href="#gallery-group-1" class="btn btn-outline-primary  btn-xs">here</a>
+            </p>
+            <div id="options" class="m-b-10">
+                <span class="gallery-option-set" id="filter" data-option-key="filter">
+
+                    <a href="#show-all" class="btn btn-outline-success  btn-xs active" data-option-value="*">Show All</a>
+                    <a href="#gallery-group-1" class="btn btn-outline-success  btn-xs" data-option-value=".gallery-group-1">Category 1</a>
+                    <a href="#gallery-group-2" class="btn btn-outline-success  btn-xs" data-option-value=".gallery-group-2">Category 2</a>
+                    <a href="#gallery-group-3" class="btn btn-outline-success  btn-xs" data-option-value=".gallery-group-3">Category 3</a>
+                    <a href="#gallery-group-4" class="btn btn-outline-success  btn-xs" data-option-value=".gallery-group-4">Category 4</a>
+                     <input type="text" class="form-control" id="filter" placeholder="Filter By Name">
+                </span>
+            </div>
+            <!-- begin row -->
+            <br>
+            <div class="row">
+                <div class="col-sm-6 col-lg-3">
+                    <div class="github-widget" data-username="shalomz"></div>
+                    <script src="https://unpkg.com/github-card@1.2.1/dist/widget.js"></script>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="card">
+                        <div class="github-widget" data-username="shalomz"></div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="card">
+                        <div class="github-card" data-user="shalomz" data-repo="howto" data-theme="medium"></div>
+                        <script src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Tool D</h5>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                            <a href="#" class="btn btn-primary">Visit Site</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="not-found" hidden="true">
+                <div id="error-msg">
+                    <div class="alert alert-danger m-b-0 m-t-15 text-center">No Item matching your query has been found.
+                        <br> You can <a href="">View All Items Instead</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end #content -->
+        <!-- begin theme-panel -->
+        <!-- begin scroll to top btn -->
+        <a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i class="fa fa-angle-up"></i></a>
+        <!-- end scroll to top btn -->
+    </div>
+    <!-- end page container -->
+    <!-- ================== BEGIN BASE JS ================== -->
+    <script src="{% static 'dashboard/assets/plugins/jquery/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'dashboard/assets/plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'dashboard/assets/plugins/bootstrap/4.1.0/js/bootstrap.bundle.min.js' %}"></script>
+    <!--[if lt IE 9]>
+        <script src="../assets/crossbrowserjs/html5shiv.js"></script>
+        <script src="../assets/crossbrowserjs/respond.min.js"></script>
+        <script src="../assets/crossbrowserjs/excanvas.min.js"></script>
+    <![endif]-->
+    <script src="{% static 'dashboard/assets/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+    <script src="{% static 'dashboard/assets/plugins/js-cookie/js.cookie.js' %}"></script>
+    <script src="{% static 'dashboard/assets/js/theme/default.min.js' %}"></script>
+    <script src="{% static 'dashboard/assets/js/apps.min.js' %}"></script>
+    <!-- ================== END BASE JS ================== -->
+    <script>
+    $(document).ready(function() {
+        App.init();
+    });
+    </script>
+    <script>
+    $("#filter").keyup(function() {
+
+        // Retrieve the input field text and reset the count to zero
+        var filter = $(this).val(),
+            count = 0;
+
+
+        // Loop through the comment list
+        $(".card-body").each(function() {
+
+            // If the list item does not contain the text phrase fade it out
+            if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+                $(this).hide();
+                console.log('In if Statement Count =' + count + ' Variable =' + $(this).text().search(new RegExp(filter, "i")));
+                if (count < 1) {
+                    console.log('None found');
+                    $(".not-found").show();
+                }
+
+                // Show the list item if the phrase matches and increase the count by 1
+            } else {
+                $(this).fadeIn();
+                $(".not-found").hide();
+                console.log($(this).text().search(new RegExp(filter, "i")));
+                count++;
+                console.log('In Else Statement Count=' + count + 'Variable =' + $(this).text().search(new RegExp(filter, "i")))
+            }
+        });
+    });
+    </script>
+   
+</body>
+
+</html>

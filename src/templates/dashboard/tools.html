@@ -137,7 +137,7 @@
                     <button class="btn btn-outline-success btn-xs active all" id="all">Show All</a>{% endif %} {% for category in categories %}
                         <button class="btn btn-outline-success btn-xs filt" id="{{ category.id }}">{{ category.name }}</button>
                         {% endfor %}
-                        <input type="text" class="form-control" id="filter" placeholder="Filter By Name">
+                        <input type="text" class="form-control" id="search" placeholder="Filter By Name">
 
                 </span>
             </div>
@@ -219,41 +219,27 @@
         });
     </script>
     <script>
-        $("#filter").keyup(function () {
-
-            // Retrieve the input field text and reset the count to zero
-            var filter = $(this).val(),
-                count = 0;
-
-
-            // Loop through the comment list
-            $(".item").each(function () {
-
-                // If the list item does not contain the text phrase fade it out
-                if ($(this).text().search(new RegExp(filter, "i")) < 0) {
-                    $(this).hide();
-                    console.log('In if Statement Count =' + count + ' Variable =' + $(this).text().search(
-                        new RegExp(filter, "i")));
-                    if (count < 1) {
-                        $(".not-found").show();
-                    }
-
-
-                    // Show the list item if the phrase matches and increase the count by 1
-                } else {
-                    $(this).fadeIn();
-                    $(".not-found").hide();
-                    console.log($(this).text().search(new RegExp(filter, "i")));
-                    count++;
-                    console.log('In Else Statement Count=' + count + 'Variable =' + $(this).text().search(
-                        new RegExp(filter, "i")))
-
-                }
-
+        $(document).ready(function(){
+            $('#search').keyup(function(){
+            
+             // Search text
+             var text = $(this).val();
+            
+             // Hide all content class element
+             $('.item').hide();
+           
+             // Search 
+             $('.item .title:contains("'+text+'")').closest('.item').show();
+            
             });
-
-
-        });
+           });
+           
+           $.expr[":"].contains = $.expr.createPseudo(function(arg) {
+             return function( elem ) {
+              return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+             };
+           });
+           
     </script>
     <script>
         $(document).ready(function () {

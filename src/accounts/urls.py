@@ -4,14 +4,14 @@ from rest_framework.routers import DefaultRouter
 
 from .api.views import bp_data, missing_info, BPDataModelViewSet
 from .models import BlockProducer
-from .views import bps, countries, home, render_missing
+from .views import bps, countries, render_missing
 
 router = DefaultRouter()
 
-router.register('data-filter', BPDataModelViewSet, base_name='data-filter')
+router.register('data-filter', BPDataModelViewSet, base_name='api/data-filter')
 
 urlpatterns = [
-    path('', home, name='home'),
+   
     path('countries/', countries, name='countries'),
     # path('data.geojson', GeoJSONLayerView.as_view(model=BlockProducer), name='data1'),
     path('data.geojson',TiledGeoJSONLayerView.as_view(model=BlockProducer), name='data'),

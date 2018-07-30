@@ -21,3 +21,8 @@ def filter(request, category_id):
     category = Category.objects.get(id=category_id)
     tools = Tool.objects.filter(categories=category)
     return render(request, 'dashboard/partials/_tools_filter.html', {'categories':category, 'tools':tools})
+
+
+
+def map(request):
+    return render(request, 'map.html')

@@ -43,7 +43,7 @@
                     <span>{{ category.name }}</span>
                 </a>
                 <ul class="sub-menu">
-                    {% for tool in category.tool_category.all %}
+                    {% for tool in category.categories.all %}
                     <li>
                         <a href="{{ tool.link }}" target="_blank">{{ tool.name }}</a>
                     </li>

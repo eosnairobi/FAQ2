@@ -1,0 +1,221 @@
+{% load staticfiles notifications_tags easy_thumbnails_tags %}
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8" />
+    <title>EOSiO Hub | EOSiO Dapps</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!-- ================== BEGIN BASE CSS STYLE ================== -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    <link href="{% static 'dashboard/assets/plugins/jquery-ui/jquery-ui.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'dashboard/assets/plugins/bootstrap/4.1.0/css/bootstrap.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'dashboard/assets/plugins/font-awesome/5.0/css/fontawesome-all.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'dashboard/assets/plugins/animate/animate.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'dashboard/assets/css/default/style.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'dashboard/assets/css/default/style-responsive.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'dashboard/assets/css/default/theme/default.css' %}" rel="stylesheet" id="theme" />
+    <link href="{% static 'forum/assets/css/e-commerce/style.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'forum/assets/css/e-commerce/style-responsive.min.css' %}" rel="stylesheet" />
+    <!-- ================== END BASE CSS STYLE ================== -->
+    <!-- ================== BEGIN BASE JS ================== -->
+    <script src="{% static 'dashboard/assets/plugins/pace/pace.min.js' %}"></script>
+    <!-- ================== END BASE JS ================== -->
+    <style type="text/css"></style>
+</head>
+
+<body>
+    <div id="page-loader" class="fade show">
+        <span class="spinner"></span>
+    </div>
+    <!-- end #page-loader -->
+    <!-- begin #page-container -->
+    <div id="page-container" class="page-container fade page-header-fixed page-sidebar-fixed page-with-top-menu">
+        <!-- begin #header -->
+        {% include 'dashboard/navbar.html' %}
+        <!-- end #header -->
+        <!-- begin #top-menu -->
+        <div id="top-menu" class="top-menu">
+            <!-- begin top-menu nav -->
+            {% include 'dashboard/top-menu.html' %}
+            <!-- end top-menu nav -->
+        </div>
+        <!-- end #top-menu -->
+        {% include 'dashboard/sidebar.html' %}
+        <!-- begin #content -->
+        <div id="content" class="content">
+            <!-- begin breadcrumb -->
+            <ol class="breadcrumb pull-right">
+                <li class="breadcrumb-item">
+                    <a href="javascript:;">Home</a>
+                </li>
+                <li class="breadcrumb-item active">Dapps</li>
+            </ol>
+            <!-- end breadcrumb -->
+            <!-- begin page-header -->
+            <h1 class="page-header m-b-10">EOSiO Dapps
+                <small>All Categories</small>
+            </h1>
+            <!-- end page-header -->
+            <p class="m-b-20">
+              
+            </p>
+            <hr>
+            <!-- begin row -->
+            <!-- BEGIN #my-account -->
+            <div id="about-us-cover" class="section-container">
+                <!-- BEGIN container -->
+                <div class="container">
+                       <div class=""> We are working hard to compile the entire list of Dapps.</div>
+                    <!-- BEGIN account-container -->
+                    {% comment %} {% for dapp in dapps %}
+                    <div class="account-container">
+                        <!-- BEGIN account-sidebar -->
+                        <div class="account-sidebar">
+                            <div class="account-sidebar-cover">
+                                <img src="{% thumbnail dapp.image|default:'deos.png' 600x600 %}" alt="" />
+                            </div>
+                            <div class="account-sidebar-content">
+                                <h5 class="text-success">{{ dapp.name }}</h5>
+                                <p>
+                                    {{ dapp.about }}
+                                </p>
+
+                                <div id="options" class="m-b-10 text-center">
+                                    <span class="gallery-option-set" id="filter" data-option-key="filter">
+
+                                        <a href="https://recovery.eos911.io/" title="EOS 911 Emergency Website" class="btn btn-outline-success" title="Website">
+                                            <i class="fa fa-globe"></i>
+                                        </a>
+                                        <a href="https://t.me/EOS911" title="EOS 911 Telegram Channel" class="btn btn-outline-success" title="Telegram">
+                                            <i class="fab fa-telegram-plane"></i>
+                                        </a>
+                                        <a href="https://recovery.eos911.io/" title="EOS 911 Code on Github" class="btn btn-outline-success" title="Github">
+                                            <i class="fab fa-github"></i>
+                                        </a>
+
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END account-sidebar -->
+                        <!-- BEGIN account-body -->
+                        <div class="account-body">
+                            <!-- BEGIN row -->
+                            <div class="row">
+                                <!-- BEGIN col-6 -->
+                                <div class="col-md-6 hidden-xs">
+                                    <h4>
+                                        <i class="fa fa-info-circle text-muted text-success"></i> About </h4>
+
+                                    <hr>
+                                    <h4>
+                                        <i class="fa fa-users-cog text-muted text-warning"></i>Team</h4>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima voluptas ea aperiam perspiciatis vel in at corrupti consequatur
+                                    laborum, blanditiis, culpa magni illo ipsa alias, et maxime voluptates ipsum deserunt.
+                                </div>
+                                <!-- END col-6 -->
+                                <!-- BEGIN col-6 -->
+                                <div class="col-md-6">
+                                    <h4>
+                                        <i class="fa fa-certificate text-muted text-danger"></i> Licence</h4>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore fuga aliquid enim voluptas doloremque molestiae, quas voluptatibus
+                                    distinctio aspernatur. Nihil recusandae ullam totam minus nam eaque officia, vero praesentium
+                                    commodi!
+                                    <hr>
+                                    <h4>
+                                        <i class="fa fa-question-circle text-muted"></i> Status</h4>
+                                    <h6>
+                                        <i class="fa fa-circle text-success"></i> Live</h6>
+                                </div>
+                                <!-- END col-6 -->
+                            </div>
+                            <!-- END row -->
+                        </div>
+                        <!-- END account-body -->
+                    </div>
+                    <hr> {% endfor %} {% endcomment %}
+                    <!-- END account-container -->
+                </div>
+                <!-- END container -->
+            </div>
+            <!-- END #about-us-cover -->
+            <div class="not-found" hidden="true">
+                <div id="error-msg">
+                    <div class="alert alert-danger m-b-0 m-t-15 text-center">No Item matching your query has been found.
+                        <br> You can
+                        <a href="">View All Items Instead</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end #content -->
+        <!-- begin theme-panel -->
+        <!-- begin scroll to top btn -->
+        <a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top">
+            <i class="fa fa-angle-up"></i>
+        </a>
+        <!-- end scroll to top btn -->
+    </div>
+    <!-- end page container -->
+    <!-- ================== BEGIN BASE JS ================== -->
+    <script src="{% static 'dashboard/assets/plugins/jquery/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'dashboard/assets/plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'dashboard/assets/plugins/bootstrap/4.1.0/js/bootstrap.bundle.min.js' %}"></script>
+    <!--[if lt IE 9]>
+        <script src="../assets/crossbrowserjs/html5shiv.js"></script>
+        <script src="../assets/crossbrowserjs/respond.min.js"></script>
+        <script src="../assets/crossbrowserjs/excanvas.min.js"></script>
+    <![endif]-->
+    <script src="{% static 'dashboard/assets/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+    <script src="{% static 'dashboard/assets/plugins/js-cookie/js.cookie.js' %}"></script>
+    <script src="{% static 'dashboard/assets/js/theme/default.min.js' %}"></script>
+    <script src="{% static 'dashboard/assets/js/apps.min.js' %}"></script>
+    <!-- ================== END BASE JS ================== -->
+    <script>
+        $(document).ready(function () {
+            App.init();
+        });
+    </script>
+    <script>
+        $("#filter").keyup(function () {
+
+            // Retrieve the input field text and reset the count to zero
+            var filter = $(this).val(),
+                count = 0;
+
+
+            // Loop through the comment list
+            $(".card-body").each(function () {
+
+                // If the list item does not contain the text phrase fade it out
+                if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+                    $(this).hide();
+                    console.log('In if Statement Count =' + count + ' Variable =' + $(this).text().search(
+                        new RegExp(filter, "i")));
+                    if (count < 1) {
+                        console.log('None found');
+                        $(".not-found").show();
+                    }
+
+                    // Show the list item if the phrase matches and increase the count by 1
+                } else {
+                    $(this).fadeIn();
+                    $(".not-found").hide();
+                    console.log($(this).text().search(new RegExp(filter, "i")));
+                    count++;
+                    console.log('In Else Statement Count=' + count + 'Variable =' + $(this).text().search(
+                        new RegExp(filter, "i")))
+                }
+            });
+        });
+    </script>
+   
+</body>
+
+</html>

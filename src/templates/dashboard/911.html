@@ -1,0 +1,178 @@
+{% load staticfiles notifications_tags %}
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8" />
+    <title>EOSiO Hub | Community Tools</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!-- ================== BEGIN BASE CSS STYLE ================== -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    <link href="{% static 'dashboard/assets/plugins/jquery-ui/jquery-ui.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'dashboard/assets/plugins/bootstrap/4.1.0/css/bootstrap.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'dashboard/assets/plugins/font-awesome/5.0/css/fontawesome-all.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'dashboard/assets/plugins/animate/animate.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'dashboard/assets/css/default/style.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'dashboard/assets/css/default/style-responsive.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'dashboard/assets/css/default/theme/default.css' %}" rel="stylesheet" id="theme" />
+    <!-- ================== END BASE CSS STYLE ================== -->
+    <!-- ================== BEGIN BASE JS ================== -->
+    <script src="{% static 'dashboard/assets/plugins/pace/pace.min.js' %}"></script>
+    <!-- ================== END BASE JS ================== -->
+    <style type="text/css">
+    .card-img-right {
+        height: 100%;
+        border-radius: 0 3px 3px 0;
+    }
+
+    .flex-auto {
+        -ms-flex: 0 0 auto;
+        flex: 0 0 auto;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="page-loader" class="fade show"><span class="spinner"></span></div>
+    <!-- end #page-loader -->
+    <!-- begin #page-container -->
+    <div id="page-container" class="page-container fade page-header-fixed page-sidebar-fixed page-with-top-menu">
+        <!-- begin #header -->
+        {% include 'dashboard/navbar.html' %}
+        <!-- end #header -->
+        <!-- begin #top-menu -->
+        <div id="top-menu" class="top-menu">
+            <!-- begin top-menu nav -->
+            {% include 'dashboard/top-menu.html' %}
+            <!-- end top-menu nav -->
+        </div>
+        <!-- end #top-menu -->
+        {% include 'dashboard/sidebar.html' %}
+        <!-- begin #content -->
+        <div id="content" class="content">
+            <!-- begin breadcrumb -->
+            <ol class="breadcrumb pull-right">
+                <li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
+                <li class="breadcrumb-item active">Tools</li>
+            </ol>
+            <!-- end breadcrumb -->
+            <!-- begin page-header -->
+            <h1 class="page-header m-b-10">EOS 911 <small>Emergency</small></h1>
+            <!-- end page-header -->
+            <p class="m-b-20">
+                Lost your Keys, through <a href="https://everipedia.org/wiki/Phishing/">Phishing </a>or some similar scam? The wonderful #EOS Community has your back! You can always look
+                <a href="https://recovery.eos911.io/" title="EOS 911 Emergency Website" class="btn btn-outline-primary  btn-xs">here</a> for more Info on this.
+            </p>
+            <div class="card">
+                <img class="card-img-top" src="{% static 'dashboard/assets/img/gallery/EOS911.png'%}" alt="" />
+                <div class="card-block">
+                    <h4 class="card-title m-t-0 m-b-10">About EOS 911 Emergency</h4>
+                    <p class="card-text"> According to <a href="https://everipedia.org/wiki/eos-911/"> <strong>Everipedia</strong></a>, <strong><i>EOS 911</i></strong> is an initiative to help token holders who cannot access their EOS account after the mainnet launch. The token holders may be victims of phishing attacks, lost their private keys, or other misshapenings. The initiative is being lead by <strong><a href="https://www.eos42.io/">EOS42</a>​</strong>. There is a Telegram group for EOS 911 that is trying to organize cases as well as inform people about updates.</p>
+                    <p>You can go <a href="https://blog.eos42.io/eos911-recovery-process/" class="btn btn-outline-success  btn-xs">here</a> to get started.</p>
+                    <p>Below are some of the platforms you can check out more on this:</p>
+                    <div id="options" class="m-b-10">
+                        <span class="gallery-option-set" id="filter" data-option-key="filter">
+                            <a href="https://recovery.eos911.io/" title="EOS 911 Emergency Website" class="btn btn-outline-success"  title="Website">
+                                <i class="fa fa-globe"></i>
+                            </a>
+                            <a href="https://t.me/EOS911" title="EOS 911 Telegram Channel" class="btn btn-outline-success"  title="Telegram" >
+                                <i class="fab fa-telegram-plane"></i>
+                            </a>
+                            <a href="https://recovery.eos911.io/" title="EOS 911 Code on Github" class="btn btn-outline-success"  title="Github"  >
+                                <i class="fab fa-github"></i>
+                            </a> 
+                            <a href="https://steemit.com/eos/@eos42/introducing-eos911-emergency-prove-ownership-of-a-hacked-eos-account-on-the-genesis-snapshot" title="STEEMIT" class="btn btn-outlne-success">
+                                <img src="{% static 'forum/assets/img/steemit.png' %}" title="EOS 911 On Steemit" height="30" width="30"class="rounded"/> 
+                            </a>     
+                            <a href="https://www.eos42.io" class="hidden-xs">
+                                <img src="{% static 'bp_logos/eos42.jpg' %}" title="EOS42" height="45" width="45"class="rounded pull-right"/>
+                            </a>
+                            <a href="https://eosrio.io/" class="hidden-xs">
+                                <img src="{% static 'bp_logos/eosrio.jpg' %}" title="EOSRIO" height="45" width="45"class="rounded pull-right"/>
+                            </a>
+                            <a href="https://eosdac.io/" class="hidden-xs">
+                                <img src="{% static 'bp_logos/eosdac.jpg' %}" title="EOSDAC" height="45" width="45"class="rounded pull-right"/>
+                            </a>
+                            <a href="https://eossweden.se/" class="hidden-xs" >
+                                <img src="{% static 'bp_logos/eossw-eden.png' %}" title="EOS SW/EDEN" height="45" width="45"class="rounded pull-right"/>
+                            </a>
+                            <a href="https://www.hkeos.com/" class="hidden-xs">
+                                <img src="{% static 'bp_logos/hkeos.png' %}" title="HKEOS" height="45" width="45"class="rounded pull-right"/>
+                            </a>
+                            <a href="https://blockmatrix.network/" class="hidden-xs">
+                                <img src="{% static 'bp_logos/eosblockmatrix.jpg' %}" title="BLOCKMATRIX" height="55" width="70"class="rounded pull-right"/> 
+                            </a>
+                            <a href="https://eostribe.io/" class="hidden-xs">
+                                <img src="{% static 'bp_logos/eostribe.png' %}" title="EOSTRIBE" height="45" width="45"class="rounded pull-right"/> 
+                            </a>             
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end #content -->
+        <!-- begin theme-panel -->
+        <!-- begin scroll to top btn -->
+        <a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i class="fa fa-angle-up"></i></a>
+        <!-- end scroll to top btn -->
+    </div>
+    <!-- end page container -->
+    <!-- ================== BEGIN BASE JS ================== -->
+    <script src="{% static 'dashboard/assets/plugins/jquery/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'dashboard/assets/plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'dashboard/assets/plugins/bootstrap/4.1.0/js/bootstrap.bundle.min.js' %}"></script>
+    <!--[if lt IE 9]>
+        <script src="../assets/crossbrowserjs/html5shiv.js"></script>
+        <script src="../assets/crossbrowserjs/respond.min.js"></script>
+        <script src="../assets/crossbrowserjs/excanvas.min.js"></script>
+    <![endif]-->
+    <script src="{% static 'dashboard/assets/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+    <script src="{% static 'dashboard/assets/plugins/js-cookie/js.cookie.js' %}"></script>
+    <script src="{% static 'dashboard/assets/js/theme/default.min.js' %}"></script>
+    <script src="{% static 'dashboard/assets/js/apps.min.js' %}"></script>
+    <!-- ================== END BASE JS ================== -->
+    <script>
+    $(document).ready(function() {
+        App.init();
+    });
+    </script>
+    <script>
+    $("#filter").keyup(function() {
+
+        // Retrieve the input field text and reset the count to zero
+        var filter = $(this).val(),
+            count = 0;
+
+
+        // Loop through the comment list
+        $(".card-body").each(function() {
+
+            // If the list item does not contain the text phrase fade it out
+            if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+                $(this).hide();
+                console.log('In if Statement Count =' + count + ' Variable =' + $(this).text().search(new RegExp(filter, "i")));
+                if (count < 1) {
+                    console.log('None found');
+                    $(".not-found").show();
+                }
+
+                // Show the list item if the phrase matches and increase the count by 1
+            } else {
+                $(this).fadeIn();
+                $(".not-found").hide();
+                console.log($(this).text().search(new RegExp(filter, "i")));
+                count++;
+                console.log('In Else Statement Count=' + count + 'Variable =' + $(this).text().search(new RegExp(filter, "i")))
+            }
+        });
+    });
+    </script>
+   
+</body>
+
+</html>
