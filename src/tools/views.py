@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from .forms import SuggestionForm
 
 from .models import Category, Tool
 
@@ -10,9 +10,19 @@ def render_tools(request):
     
 
 def tools(request):
-    categories = Category.objects.all()
-    print(categories)
-    tools = Tool.objects.all()
+    categories = Category.objects.all().order_by('name')
+    
+    tools = Tool.objects.all().order_by('name')
+    if request.method == 'POST':
+        form = SuggestionForm(request.POST or None, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            print('Saved')
+        else:
+            print(form.errors)
+    
+    elif request.method =='GET':
+        form = SuggestionForm()
     return render(request, 'dashboard/tools.html', {'tools': tools,'categories': categories})
 
 
